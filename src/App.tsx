@@ -1,20 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
-
-export const ThemeContext = React.createContext(false)
+import useLocalStorage from './customHooks/useLocalStorage';
+import useLogger from './customHooks/useLogger';
 
 export default function App() {
-
-  const [name, setname] = useState('')
-  const renderCount = useRef(1)
-  useEffect(() => {
-    renderCount.current = renderCount.current + 1
-  })
+  const [name, setName] = useLocalStorage('name', '')
+  useLogger(name)
   return (
     <>
-      <input type="text" onChange={e => setname(e.target.value)} />
-      <p>Hei my name is {name}</p>
-      <p>This component rendered {renderCount.current} times</p>
+      <input type="text" value={name} onChange={e => setName(e.target.value)} />
     </>
   );
 }
